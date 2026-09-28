@@ -1,0 +1,365 @@
+/* ===== Quản lý sinh viên — giao diện danh sách =====
+   Màu lấy theo logo Đại học Đông Á: xanh navy + cam. */
+
+:root {
+  --sv-navy: #1b2a4a;
+  --sv-navy-soft: #2a3c63;
+  --sv-accent: #e5622b;
+  --sv-accent-ink: #b8430f;   /* cam đậm dùng cho chữ, đủ tương phản trên nền trắng */
+  --sv-bg: #f4f5f8;
+  --sv-surface: #ffffff;
+  --sv-ink: #1d2433;
+  --sv-muted: #667085;
+  --sv-line: #e4e7ec;
+  --sv-radius: 10px;
+}
+
+body.sv-body {
+  font-family: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 15px;
+  color: var(--sv-ink);
+  background: var(--sv-bg);
+  margin: 0;
+}
+
+[hidden] { display: none !important; }
+
+/* ---------- Thanh trên cùng ---------- */
+.sv-topbar {
+  background: var(--sv-navy);
+  border-bottom: 3px solid var(--sv-accent);
+}
+.sv-topbar-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sv-brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--sv-accent);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+.sv-brand-name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Nội dung ---------- */
+.sv-main {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 32px 24px 56px;
+}
+.sv-pagehead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.sv-pagehead .sv-subtitle { margin: 0; }
+.sv-title {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+  color: var(--sv-navy);
+}
+.sv-subtitle {
+  margin: 0 0 24px;
+  color: var(--sv-muted);
+}
+
+.sv-card {
+  background: var(--sv-surface);
+  border: 1px solid var(--sv-line);
+  border-radius: var(--sv-radius);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  overflow: hidden;
+}
+
+/* ---------- Thanh công cụ (tìm kiếm + số lượng) ---------- */
+.sv-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--sv-line);
+}
+.sv-search {
+  position: relative;
+  flex: 1 1 320px;
+  max-width: 440px;
+}
+.sv-search .bi {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--sv-muted);
+  pointer-events: none;
+}
+.sv-search input {
+  width: 100%;
+  height: 40px;
+  padding: 0 14px 0 38px;
+  font: inherit;
+  color: var(--sv-ink);
+  background: #fff;
+  border: 1px solid #cfd4dc;
+  border-radius: 8px;
+}
+.sv-search input::placeholder { color: #98a2b3; }
+.sv-search input:focus-visible {
+  outline: 3px solid rgba(229, 98, 43, 0.35);
+  outline-offset: 0;
+  border-color: var(--sv-accent);
+}
+.sv-count {
+  color: var(--sv-muted);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.sv-count strong { color: var(--sv-ink); font-weight: 600; }
+
+/* ---------- Bảng ---------- */
+.sv-table-wrap { overflow-x: auto; }
+.sv-table {
+  --bs-table-bg: transparent;
+  --bs-table-hover-bg: #f8f9fc;
+  --bs-table-hover-color: var(--sv-ink);
+  min-width: 900px;
+  margin: 0;
+  color: var(--sv-ink);
+}
+.sv-table > :not(caption) > * > * {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--sv-line);
+  background-color: transparent;
+}
+.sv-table thead > tr > th {
+  background: #f8f9fb;
+  color: var(--sv-muted);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--sv-line);
+}
+.sv-table tbody > tr:last-child > td { border-bottom: 0; }
+
+.sv-code {
+  font-weight: 600;
+  color: var(--sv-navy);
+  font-variant-numeric: tabular-nums;
+}
+.sv-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+.sv-avatar {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.sv-muted { color: var(--sv-muted); }
+/* Bootstrap ép màu chữ của ô bảng, nên cần độ ưu tiên cao hơn để đổi màu */
+.sv-table > :not(caption) > * > .sv-muted { color: var(--sv-muted); }
+.sv-table > :not(caption) > * > .sv-code { color: var(--sv-navy); }
+.sv-num { font-variant-numeric: tabular-nums; }
+
+/* Lớp: nhãn màu nhạt, mỗi lớp một màu để dễ phân biệt */
+.sv-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.sv-tone-0 { background: #e6ebf5; color: #1b2a4a; }
+.sv-tone-1 { background: #fdebe2; color: #a63c0c; }
+.sv-tone-2 { background: #e0f2e9; color: #1b6b43; }
+.sv-tone-3 { background: #ece8fa; color: #52379f; }
+
+/* Nút hành động */
+.sv-actions { display: flex; justify-content: flex-end; gap: 6px; }
+.sv-btn {
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--sv-line);
+  background: #fff;
+  color: var(--sv-navy);
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.sv-btn:hover { background: var(--sv-navy); border-color: var(--sv-navy); color: #fff; }
+.sv-btn-edit:hover { background: var(--sv-accent); border-color: var(--sv-accent); color: #fff; }
+.sv-btn-delete:hover { background: #b42318; border-color: #b42318; color: #fff; }
+.sv-btn:focus-visible { outline: 3px solid rgba(229, 98, 43, 0.45); outline-offset: 2px; }
+
+/* Trạng thái đang tải / rỗng / lỗi */
+.sv-state {
+  text-align: center;
+  padding: 44px 20px !important;
+  color: var(--sv-muted);
+}
+.sv-state strong { display: block; color: var(--sv-ink); margin-bottom: 4px; }
+.sv-state.sv-error strong { color: #b42318; }
+
+@media (max-width: 640px) {
+  .sv-topbar-inner, .sv-main { padding-left: 16px; padding-right: 16px; }
+  .sv-title { font-size: 24px; }
+}
+
+/* ---------- Hộp thoại (xem / sửa / xóa) ---------- */
+.sv-dialog {
+  border: 0;
+  padding: 0;
+  width: min(520px, calc(100vw - 32px));
+  border-radius: 12px;
+  color: var(--sv-ink);
+  background: var(--sv-surface);
+  box-shadow: 0 20px 50px rgba(16, 24, 40, 0.25);
+}
+.sv-dialog-sm { width: min(420px, calc(100vw - 32px)); }
+.sv-dialog::backdrop { background: rgba(27, 42, 74, 0.5); }
+
+.sv-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--sv-line);
+}
+.sv-dialog-head h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sv-navy);
+}
+.sv-close {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--sv-muted);
+  cursor: pointer;
+}
+.sv-close:hover { background: #f2f4f7; color: var(--sv-ink); }
+.sv-close:focus-visible { outline: 3px solid rgba(229, 98, 43, 0.45); outline-offset: 1px; }
+
+.sv-dialog-body { padding: 20px 24px 8px; }
+.sv-dialog-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px 20px;
+}
+
+.sv-field { margin-bottom: 16px; flex: 1 1 0; min-width: 0; }
+.sv-field-row { display: flex; gap: 16px; }
+.sv-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.sv-field input {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  font: inherit;
+  color: var(--sv-ink);
+  background: #fff;
+  border: 1px solid #cfd4dc;
+  border-radius: 8px;
+}
+.sv-field input:focus-visible {
+  outline: 3px solid rgba(229, 98, 43, 0.35);
+  border-color: var(--sv-accent);
+}
+.sv-field input:read-only { background: #f8f9fb; color: var(--sv-ink); }
+.sv-field input:user-invalid { border-color: #b42318; }
+
+.sv-form-error {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fef3f2;
+  color: #b42318;
+  font-size: 14px;
+}
+.sv-delete-text { margin: 0 0 12px; line-height: 1.55; }
+
+.sv-btn-primary, .sv-btn-danger, .sv-btn-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.sv-btn-primary { background: var(--sv-navy); color: #fff; }
+.sv-btn-primary:hover { background: var(--sv-navy-soft); }
+.sv-btn-danger { background: #b42318; color: #fff; }
+.sv-btn-danger:hover { background: #912018; }
+.sv-btn-text { background: #fff; color: var(--sv-ink); border-color: #cfd4dc; }
+.sv-btn-text:hover { background: #f8f9fb; }
+.sv-btn-primary:focus-visible, .sv-btn-danger:focus-visible, .sv-btn-text:focus-visible {
+  outline: 3px solid rgba(229, 98, 43, 0.45);
+  outline-offset: 2px;
+}
+.sv-btn-primary:disabled, .sv-btn-danger:disabled { opacity: 0.65; cursor: progress; }
+
+/* ---------- Thông báo nhỏ ---------- */
+.sv-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 2000;
+  padding: 11px 18px;
+  border-radius: 8px;
+  background: var(--sv-navy);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.25);
+}
+.sv-toast.sv-toast-error { background: #b42318; }
+
+@media (max-width: 640px) {
+  .sv-field-row { flex-direction: column; gap: 0; }
+}

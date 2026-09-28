@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/adminlte/css/adminlte.css" />
+    <link rel="stylesheet" href="/assets/css/students.css" />
+</head>
+<body class="sv-body">
+
+    <header class="sv-topbar">
+        <div class="sv-topbar-inner">
+            <span class="sv-brand-mark"><i class="bi bi-mortarboard-fill"></i></span>
+            <span class="sv-brand-name">Quản lý sinh viên</span>
+        </div>
+    </header>
+
+    <main class="sv-main">
+        <div class="sv-pagehead">
+            <div>
+                <h1 class="sv-title">Danh sách sinh viên</h1>
+                <p class="sv-subtitle">Xem, tìm kiếm, thêm và chỉnh sửa thông tin sinh viên.</p>
+            </div>
+            <button type="button" class="sv-btn-primary" id="addBtn">
+                <i class="bi bi-plus-lg"></i> Thêm sinh viên
+            </button>
+        </div>
+
+        <div class="sv-card">
+            <div class="sv-toolbar">
+                <label class="sv-search">
+                    <i class="bi bi-search"></i>
+                    <input id="searchInput" type="search" autocomplete="off"
+                           placeholder="Tìm theo mã, tên, email hoặc số điện thoại"
+                           aria-label="Tìm sinh viên">
+                </label>
+                <div class="sv-count" id="studentCount" aria-live="polite"></div>
+            </div>
+
+            <div class="sv-table-wrap">
+                <table class="table table-hover align-middle mb-0 sv-table">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 15%;">Mã sinh viên</th>
+                            <th style="width: 20%;">Họ và tên</th>
+                            <th style="width: 20%;">Email</th>
+                            <th style="width: 20%;">Số điện thoại</th>
+                            <th style="width: 10%;">Lớp</th>
+                            <th style="width: 20%;" class="text-end">Hành động</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="studentTableBody">
+                        <tr>
+                            <td colspan="6" class="sv-state">
+                                Đang tải dữ liệu...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Hộp thoại Xem / Sửa -->
+    <dialog id="studentDialog" class="sv-dialog" aria-labelledby="dialogTitle">
+        <form id="studentForm" autocomplete="off">
+            <div class="sv-dialog-head">
+                <h2 id="dialogTitle">Chỉnh sửa sinh viên</h2>
+                <button type="button" class="sv-close" data-close aria-label="Đóng"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="sv-dialog-body">
+                <div class="sv-field">
+                    <label for="fCode">Mã sinh viên</label>
+                    <input id="fCode" name="studentCode" required maxlength="50" autofocus>
+                </div>
+                <div class="sv-field">
+                    <label for="fName">Họ và tên</label>
+                    <input id="fName" name="fullName" required maxlength="255">
+                </div>
+                <div class="sv-field">
+                    <label for="fEmail">Email</label>
+                    <input id="fEmail" name="email" type="email" required maxlength="255">
+                </div>
+                <div class="sv-field-row">
+                    <div class="sv-field">
+                        <label for="fPhone">Số điện thoại</label>
+                        <input id="fPhone" name="phone" maxlength="255">
+                    </div>
+                    <div class="sv-field">
+                        <label for="fClass">Lớp</label>
+                        <input id="fClass" name="className" maxlength="255">
+                    </div>
+                </div>
+                <p id="formError" class="sv-form-error" role="alert" hidden></p>
+            </div>
+            <div class="sv-dialog-foot">
+                <button type="button" class="sv-btn-text" id="cancelBtn" data-close>Hủy</button>
+                <button type="submit" class="sv-btn-primary" id="saveBtn">Lưu thay đổi</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Hộp thoại xác nhận xóa -->
+    <dialog id="deleteDialog" class="sv-dialog sv-dialog-sm" aria-labelledby="deleteTitle">
+        <div class="sv-dialog-head">
+            <h2 id="deleteTitle">Xóa sinh viên?</h2>
+        </div>
+        <div class="sv-dialog-body">
+            <p id="deleteText" class="sv-delete-text"></p>
+            <p id="deleteError" class="sv-form-error" role="alert" hidden></p>
+        </div>
+        <div class="sv-dialog-foot">
+            <button type="button" class="sv-btn-text" data-close>Hủy</button>
+            <button type="button" class="sv-btn-danger" id="confirmDeleteBtn">Xóa sinh viên</button>
+        </div>
+    </dialog>
+
+    <div id="toast" class="sv-toast" role="status" aria-live="polite" hidden></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/assets/js/students.js"></script>
+</body>
+</html>
